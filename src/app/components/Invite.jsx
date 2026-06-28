@@ -9,7 +9,6 @@ import Image from "next/image";
 
 // Placeholder data (Replace with your actual imported variables)
 
-
 const Invite = () => {
   let CardInfo = [
     {
@@ -55,7 +54,7 @@ const Invite = () => {
             key={c.artist}
             // justify-between pushes the image and text apart, creating negative space in the middle
             className={`w-full flex flex-col gap-10 items-center justify-between border-b border-gray-200 pb-12 ${
-              isEven ? "md:flex-row" : "md:flex-row-reverse"
+              isEven ? "sm:flex-row" : "sm:flex-row-reverse"
             }`}
           >
             {/* Image Container */}
@@ -64,8 +63,7 @@ const Invite = () => {
                 src={c.img}
                 alt={c.artname}
                 // Removed the fixed width from Next Image and put it here for better styling control
-                width={300}
-                className="object-cover h-auto rounded-lg shadow-md"
+                className="object-cover w-[clamp(200px,20vw,280px)] h-auto rounded-lg shadow-md"
               />
             </div>
 
@@ -77,7 +75,7 @@ const Invite = () => {
                   {c.artname}
                 </h2>
                 <h4 className="text-lg uppercase  font-['Mona_Sans_Variable'] text-gray-500 font-semibold">
-                  {c.artist}
+                  by {c.artist}
                 </h4>
               </div>
 

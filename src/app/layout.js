@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
       lang="en"
       
     >
-      <body className="min-h-full flex flex-col bg-[#FFCDB2] p-1 sm:p-3 md:p-6">{children}</body>
+      <body className="min-h-full flex overflow-x-hidden flex-col bg-[#FFCDB2] p-1 sm:p-3 md:p-6">{children}</body>
     </html>
   );
 }

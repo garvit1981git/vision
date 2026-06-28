@@ -66,20 +66,43 @@ const HeroSection = () => {
 
   useGSAP(
     () => {
-      gsap.set(".animation-text", { x: 40, opacity: 0 });
-      gsap.set(".animation-img", { scale: 0.9, opacity: 0 });
-      gsap.to(".animation-text", {
-        x: 0,
-        opacity: 0.88,
-        duration: 1.5,
-        ease: "power4.out",
-      });
-      gsap.to(".animation-img", {
-        scale: 1,
-        opacity: 1,
-        duration: 0.5,
-        ease: "power3.out",
-      });
+      // 1. Create a matchMedia instance
+      let mm = gsap.matchMedia();
+
+      // 2. Add your breakpoints (matching Tailwind's default breakpoints)
+      mm.add(
+        {
+          isMobile: "(max-width: 639px)", // default (under sm)
+          isTablet: "(min-width: 640px) and (max-width: 767px)", // sm to md
+          isDesktop: "(min-width: 768px)", // md and up
+        },
+        (context) => {
+          // 3. Extract the active conditions
+          let { isMobile, isTablet, isDesktop } = context.conditions;
+
+          // 4. Set your variable based on the screen size
+          let responsiveX = isMobile ? "18vw" : isTablet ? "23vw" : "26vw";
+
+          // 5. Run your animations using the new variable!
+          gsap.set(".animation-text", { x: "50vw", opacity: 0 }); // Starting position
+          gsap.set(".animation-img", { scale: 0.9, opacity: 0 });
+
+          gsap.to(".animation-text", {
+            x: responsiveX, // Passes "22vw", "23vw", or "25vw" to GSAP
+            opacity: 0.88,
+            duration: 1.5,
+            stagger: 0.3,
+            ease: "power4.out",
+          });
+
+          gsap.to(".animation-img", {
+            scale: 1,
+            opacity: 1,
+            duration: 0.5,
+            ease: "power3.out",
+          });
+        },
+      );
     },
     { dependencies: [CurrentSlideIndex], scope: container },
   );
@@ -104,50 +127,39 @@ const HeroSection = () => {
   // Shared text classes — font scales up at each breakpoint
   // sm≈640px  md≈768px  lg≈1024px
   const txt =
-    "animation-text uppercase font-['Instrument_Serif'] text-[#890620] absolute ";
-  const size = "text-[4.2rem] sm:text-[5rem] md:text-[6rem] lg:text-[7.5rem]";
+    "animation-text translate-x-[25vw]  uppercase font-['Instrument_Serif'] text-[#890620]";
+  let size = "text-5xl sm:text-6xl md:text-7xl ";
 
   return (
     <div
       ref={container}
-      className="mt-4 flex h-[60vh] sm:h-[65vh] md:h-[70vh] w-full border items-center justify-end relative overflow-hidden"
+      className="mt-4 max-h-350px w-full  relative flex flex-col  "
     >
       {/* ── Row 1: line1 (left) · line2 (right) ── */}
-      <h1
-        className={`${txt} ${size} top-[6%] sm:top-[4%]
-          left-[8%] sm:left-[27%] md:left-[28%]
-          -z-10 opacity-88`}
+      <span
+        className={`${txt} ${size} 
+           opacity-88 w-auto `}
       >
         {currentSlide.line1}
-      </h1>
-      <h1
-        className={`${txt} ${size} top-[6%] sm:top-[4%]
-          left-[60%] sm:left-[59%] md:left-[60%]
+      </span>
+      <span
+        className={`${txt} ${size} 
           opacity-88`}
       >
         {currentSlide.line2}
-      </h1>
+      </span>
 
       {/* ── Center image — scales with viewport ── */}
       <Image
         src={currentSlide.imgsrc}
         alt="hero image"
-        width={300}
-        className="rounded-4xl animation-img absolute left-1/2 -translate-x-1/2
-                   w-[clamp(200px,18vw,300px)] h-auto"
+        className="rounded-4xl animation-img object-cover w-[clamp(150px,16vw,200px)] h-auto my-4 md:my-0 absolute left-1/2 sm:w-[clamp(200px,16vw,280px)] sm:-translate-x-1/2 -z-10   "
       />
 
       {/* ── Row 2: line3 (left) · line4 (right) ── */}
+      <h1 className={`${txt} ${size}  opacity-88`}>{currentSlide.line3}</h1>
       <h1
-        className={`${txt} ${size} top-[40%]
-          left-[1%] sm:left-[24%] md:left-[25%]
-          -z-10 opacity-88`}
-      >
-        {currentSlide.line3}
-      </h1> 
-      <h1
-        className={`${txt} ${size} top-[40%]
-          left-[50%] sm:left-[54%] md:left-[55%]
+        className={`${txt} ${size}
           opacity-88`}
       >
         {currentSlide.line4}
@@ -155,20 +167,19 @@ const HeroSection = () => {
 
       {/* ── Row 3: line5 (center-ish) ── */}
       <h1
-        className={`${txt} ${size} bottom-0
-          left-[20%] sm:left-[32%] md:left-[34%]
+        className={`${txt} ${size} 
           opacity-88`}
       >
         {currentSlide.line5}
       </h1>
 
       {/* ── Next button ── */}
-      <button
+      {/* <button
         onClick={handleManualNext}
-        className="absolute bottom-3 right-3 sm:static sm:mr-4
+        className=" sm:mr-4
                    p-2.5 sm:p-4 border border-[#890620] text-[#890620]
                    rounded-full hover:bg-[#890620] hover:text-white
-                   transition-all duration-300 group z-10"
+                   transition-all duration-300 group "
         aria-label="Next slide"
       >
         <svg
@@ -185,7 +196,7 @@ const HeroSection = () => {
             d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
           />
         </svg>
-      </button>
+      </button> */}
     </div>
   );
 };

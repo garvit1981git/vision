@@ -81,7 +81,7 @@ const HeroSection = () => {
           let { isMobile, isTablet, isDesktop } = context.conditions;
 
           // 4. Set your variable based on the screen size
-          let responsiveX = isMobile ? "18vw" : isTablet ? "23vw" : "26vw";
+          let responsiveX = isMobile ? "18vw" : isTablet ? "20vw" : "25vw";
 
           // 5. Run your animations using the new variable!
           gsap.set(".animation-text", { x: "50vw", opacity: 0 }); // Starting position
@@ -127,13 +127,25 @@ const HeroSection = () => {
   // Shared text classes — font scales up at each breakpoint
   // sm≈640px  md≈768px  lg≈1024px
   const txt =
-    "animation-text translate-x-[25vw]  uppercase font-['Instrument_Serif'] text-[#890620]";
+    "animation-text translate-x-[25vw] sm:translate-x-[20vw] uppercase font-['Instrument_Serif'] text-[#890620]";
   let size = "text-5xl sm:text-6xl md:text-7xl ";
 
   return (
+    <>
+    <Image
+  src={currentSlide.imgsrc}
+  alt="hero image"
+  // 1. I deleted the width and height props! Let Next.js do it automatically.
+  className={[
+    "rounded-4xl animation-img absolute -z-10",
+    " left-1/2 top-[13vh] -translate-x-1/2",
+    "w-[clamp(150px,40vw,200px)]  sm:w-[clamp(200px,20vw,240px)]", 
+    "h-auto" 
+  ].join(" ")}
+/>
     <div
       ref={container}
-      className="mt-4  w-full mb:10% sm:mb-[5%] md:mb-[7%] relative flex flex-col  "
+      className="mt-8 w-full overflow-hidden mb:10% sm:mb-[5%] md:mb-[7%] relative flex flex-col  "
     >
       {/* ── Row 1: line1 (left) · line2 (right) ── */}
       <span
@@ -151,17 +163,7 @@ const HeroSection = () => {
 
         {/* ── Center image — scales with viewport ── */}
    {/* ── Center image — scales with viewport ── */}
-<Image
-  src={currentSlide.imgsrc}
-  alt="hero image"
-  // 1. I deleted the width and height props! Let Next.js do it automatically.
-  className={[
-    "rounded-4xl animation-img absolute -z-10",
-    "top-4 sm:top-[1vw] left-1/2 -translate-x-1/2",
-    "w-[clamp(150px,40vw,200px)] sm:w-[clamp(200px,20vw,280px)]", 
-    "h-auto" 
-  ].join(" ")}
-/>
+
 
       {/* ── Row 2: line3 (left) · line4 (right) ── */}
       <h1 className={`${txt} ${size}  opacity-88`}>{currentSlide.line3}</h1>
@@ -205,6 +207,7 @@ const HeroSection = () => {
         </svg>
       </button> */}
     </div>
+    </>
   );
 };
 

@@ -133,7 +133,7 @@ const HeroSection = () => {
   return (
     <div
       ref={container}
-      className="mt-4 max-h-350px w-full  relative flex flex-col  "
+      className="mt-4  w-full mb:10% sm:mb-[5%] md:mb-[7%] relative flex flex-col  "
     >
       {/* ── Row 1: line1 (left) · line2 (right) ── */}
       <span
@@ -149,12 +149,19 @@ const HeroSection = () => {
         {currentSlide.line2}
       </span>
 
-      {/* ── Center image — scales with viewport ── */}
-      <Image
-        src={currentSlide.imgsrc}
-        alt="hero image"
-        className="rounded-4xl animation-img object-cover w-[clamp(150px,16vw,200px)] h-auto my-4 md:my-0 absolute left-1/2 sm:w-[clamp(200px,16vw,280px)] sm:-translate-x-1/2 -z-10   "
-      />
+        {/* ── Center image — scales with viewport ── */}
+   {/* ── Center image — scales with viewport ── */}
+<Image
+  src={currentSlide.imgsrc}
+  alt="hero image"
+  // 1. I deleted the width and height props! Let Next.js do it automatically.
+  className={[
+    "rounded-4xl animation-img absolute -z-10",
+    "top-4 sm:top-[1vw] left-1/2 -translate-x-1/2",
+    "w-[clamp(150px,40vw,200px)] sm:w-[clamp(200px,20vw,280px)]", 
+    "h-auto" 
+  ].join(" ")}
+/>
 
       {/* ── Row 2: line3 (left) · line4 (right) ── */}
       <h1 className={`${txt} ${size}  opacity-88`}>{currentSlide.line3}</h1>

@@ -3,7 +3,7 @@ import HeroSection from "./components/HeroSection";
 import Invite from "./components/Invite";
 import Navbar from "./components/Navbar";
 import AboutArtists from "./components/AboutArtists";
-import HeroSection2 from "./components/HeroSection2";
+// import HeroSection2 from "./components/HeroSection2";
 
 
 export default function Home() {

@@ -132,58 +132,57 @@ const HeroSection = () => {
 
   return (
     <>
-    <Image
-  src={currentSlide.imgsrc}
-  alt="hero image"
-  // 1. I deleted the width and height props! Let Next.js do it automatically.
-  className={[
-    "rounded-4xl animation-img absolute -z-10",
-    " left-1/2 top-[13vh] -translate-x-1/2",
-    "w-[clamp(150px,40vw,200px)]  sm:w-[clamp(200px,20vw,240px)]", 
-    "h-auto" 
-  ].join(" ")}
-/>
-    <div
-      ref={container}
-      className="mt-8 w-full overflow-hidden mb:10% sm:mb-[5%] md:mb-[7%] relative flex flex-col  "
-    >
-      {/* ── Row 1: line1 (left) · line2 (right) ── */}
-      <span
-        className={`${txt} ${size} 
+      <Image
+        src={currentSlide.imgsrc}
+        alt="hero image"
+        // 1. I deleted the width and height props! Let Next.js do it automatically.
+        className={[
+          "rounded-4xl animation-img absolute -z-10",
+          " left-1/2 top-[13vh] -translate-x-1/2",
+          "w-[clamp(150px,40vw,200px)]  sm:w-[clamp(200px,20vw,240px)]",
+          "h-auto",
+        ].join(" ")}
+      />
+      <div
+        ref={container}
+        className="mt-8 w-full overflow-hidden mb:10% sm:mb-[5%] md:mb-[7%] relative flex flex-col  "
+      >
+        {/* ── Row 1: line1 (left) · line2 (right) ── */}
+        <span
+          className={`${txt} ${size} 
            opacity-88 w-auto `}
-      >
-        {currentSlide.line1}
-      </span>
-      <span
-        className={`${txt} ${size} 
+        >
+          {currentSlide.line1}
+        </span>
+        <span
+          className={`${txt} ${size} 
           opacity-88`}
-      >
-        {currentSlide.line2}
-      </span>
+        >
+          {currentSlide.line2}
+        </span>
 
         {/* ── Center image — scales with viewport ── */}
-   {/* ── Center image — scales with viewport ── */}
+        {/* ── Center image — scales with viewport ── */}
 
-
-      {/* ── Row 2: line3 (left) · line4 (right) ── */}
-      <h1 className={`${txt} ${size}  opacity-88`}>{currentSlide.line3}</h1>
-      <h1
-        className={`${txt} ${size}
+        {/* ── Row 2: line3 (left) · line4 (right) ── */}
+        <h1 className={`${txt} ${size}  opacity-88`}>{currentSlide.line3}</h1>
+        <h1
+          className={`${txt} ${size}
           opacity-88`}
-      >
-        {currentSlide.line4}
-      </h1>
+        >
+          {currentSlide.line4}
+        </h1>
 
-      {/* ── Row 3: line5 (center-ish) ── */}
-      <h1
-        className={`${txt} ${size} 
+        {/* ── Row 3: line5 (center-ish) ── */}
+        <h1
+          className={`${txt} ${size} 
           opacity-88`}
-      >
-        {currentSlide.line5}
-      </h1>
+        >
+          {currentSlide.line5}
+        </h1>
 
-      {/* ── Next button ── */}
-      {/* <button
+        {/* ── Next button ── */}
+        {/* <button
         onClick={handleManualNext}
         className=" sm:mr-4
                    p-2.5 sm:p-4 border border-[#890620] text-[#890620]
@@ -206,7 +205,7 @@ const HeroSection = () => {
           />
         </svg>
       </button> */}
-    </div>
+      </div>
     </>
   );
 };

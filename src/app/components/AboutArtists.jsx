@@ -1,18 +1,19 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import artist1 from "../Images/artist1.webp";
 import artist2 from "../Images/artist2.webp";
 import artist3 from "../Images/artist3.jpg";
 import artist4 from "../Images/artist4.webp";
 import artist5 from "../Images/artist5.jpg";
 import Image from "next/image";
-
-const Buy = () => {
+import { ChevronDown, ChevronUp } from "lucide-react";
+const AboutArtists = () => {
+  let [openartist, setopenartist] = useState(null);
   let ArtistData = [
     {
       artist: "Eliza Mowery",
       img: artist1,
-      desc: 'Eliza Mowery has been a full-time artist in Indianapolis since January of 2022. Her studio is currently located at the Harrison Center and also out of her home. She primarily uses acrylic paint as her medium of choice, but enjoys playing with pastels and gauche as well Eliza’s inspiration comes from many places, but usually is found in the natural world.',
+      desc: "Eliza Mowery has been a full-time artist in Indianapolis since January of 2022. Her studio is currently located at the Harrison Center and also out of her home. She primarily uses acrylic paint as her medium of choice, but enjoys playing with pastels and gauche as well Eliza’s inspiration comes from many places, but usually is found in the natural world.",
     },
     {
       artist: "Diana T Jahns",
@@ -27,7 +28,7 @@ const Buy = () => {
     {
       artist: "Tessa Brown",
       img: artist4,
-      desc: 'Tessa Brown is an abstract and impressionist painter based in Kyle, Texas, just south of Austin. She is best known for creating moody, nostalgic landscapes and abstracts that evoke memories of nature, family, and faith.Brown works primarily in oils, acrylics, and gouache, often incorporating oil pastels and charcoal.  Her style is heavily influenced by the Impressionists, particularly Monet and Degas, whom she studied as a student. ',
+      desc: "Tessa Brown is an abstract and impressionist painter based in Kyle, Texas, just south of Austin. She is best known for creating moody, nostalgic landscapes and abstracts that evoke memories of nature, family, and faith.Brown works primarily in oils, acrylics, and gouache, often incorporating oil pastels and charcoal.  Her style is heavily influenced by the Impressionists, particularly Monet and Degas, whom she studied as a student. ",
     },
 
     {
@@ -39,6 +40,9 @@ const Buy = () => {
   let handeSeeArtwork = () => {
     console.log("hii");
   };
+  let ShowDesc = (index) => {
+    setopenartist((prev) => (prev == index ? null : index));
+  };
   return (
     <div className="mt-10  px-4 md:px-20">
       <h1 className="capitalize text-[#890620] lg:text-[4vw] md:text-[5vw] text-[8vw] font-['Instrument_Serif'] text-center m-4">
@@ -46,6 +50,7 @@ const Buy = () => {
       </h1>
       <div className="holder gap-10  flex flex-col">
         {ArtistData.map((artist, index) => {
+          let open = index === openartist;
           let isEven = index % 2 == 0;
           return (
             <React.Fragment key={artist.artist}>
@@ -61,13 +66,44 @@ const Buy = () => {
                   <h1 className="text-2xl md:text-4xl mb-3 capitalize text-[#890620] font-['Mona_Sans_Variable'] tracking-wide ">
                     {artist.artist}
                   </h1>
-                  <p className=" font-['Mona_Sans_Variable'] leading-[25px] opacity-90">
+                  <p className="sm:block hidden text-[14.5px] font-['Mona_Sans_Variable'] leading-[25px] opacity-90">
                     {" "}
                     {artist.desc}
                   </p>
+                  <button onClick={() => ShowDesc(index)}>
+                    <div className="sm:hidden border-y border-[#890620] flex-col gap-3 whitespace-nowrap mx-5 text-[#890620] p-3  font-medium group transition-all  transform duration-300">
+                      <div className=" flex justify-center items-center">
+                        <span className="group-hover:scale-102">
+                          About artist
+                        </span>
+                        <span>
+                          {open ? (
+                            <>
+                              <ChevronUp className="w-5 h-5 text-gray-600 transition-transform group-hover:translate-y-1"></ChevronUp>
+                            </>
+                          ) : (
+                            <>
+                              <ChevronDown className="w-5 h-5 text-gray-600 transition-transform group-hover:translate-y-1"></ChevronDown>
+                            </>
+                          )}
+                        </span>
+                      </div>
+                      <div
+                        className={`grid transition-[grid-template-rows] duration-500 ease-in-out ${
+                          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                        }`}
+                      >
+                        <div className="overflow-hidden">
+                          <p className="text-[14.5px] font-['Mona_Sans_Variable'] leading-[25px] opacity-90 w-full whitespace-normal pb-3 px-3">
+                            {artist.desc}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
                   <button
                     onClick={handeSeeArtwork}
-                    className="mt-[8%] sm:mr-4 p-2.5 sm:p-4 border border-[#890620] text-[#890620] rounded-full  hover:bg-[#890620] hover:text-white transition-all duration-300 group z-10 flex-row-reverse justify-between items-center capitalize font-['Mona_Sans_Variable'] mx-auto px-4 gap-3 flex whitespace-nowrap"
+                    className="mt-[8%] sm:mr-4  border border-[#890620] text-[#890620] rounded-full  hover:bg-[#890620] hover:text-white transition-all duration-300 group z-10 flex-row-reverse justify-between items-center capitalize font-['Mona_Sans_Variable'] mx-auto px-4 py-2 gap-3 flex whitespace-nowrap"
                     aria-label="Next slide"
                   >
                     <svg
@@ -96,4 +132,4 @@ const Buy = () => {
   );
 };
 
-export default Buy;
+export default AboutArtists;

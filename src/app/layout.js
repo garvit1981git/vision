@@ -10,7 +10,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="min-h-full flex overflow-x-hidden flex-col bg-[#FFCDB2] p-1 sm:p-3 md:p-6">
+      <body className="min-h-full flex overflow-x-hidden flex-col ">
         <SmoothScrolling>
           <InitialReveal>{children}</InitialReveal>
         </SmoothScrolling>

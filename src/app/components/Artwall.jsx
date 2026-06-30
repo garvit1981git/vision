@@ -74,7 +74,7 @@ const wallImages = [
     <div className="mt-20 flex h-[60vh] sm:h-[80vh] justify-center items-center w-full relative overflow-hidden">
       
       {/* Background Image: Fixed for Next.js responsiveness */}
-      <div className="absolute inset-0 -z-10">
+      <div className="absolute inset-0 z-2">
         <Image
           src={bg2}
           alt="Art Wall Background"
@@ -96,7 +96,7 @@ const wallImages = [
       {wallImages.map((img, index) => (
         <div
           key={index}
-          className={`absolute shadow-xl rounded-2xl overflow-hidden hover:scale-110 hover:z-40 hover:shadow-2xl transition-all duration-500 ease-out cursor-pointer opacity-100 hover:opacity-100 ${img.styles}`}
+          className={`absolute z-3 shadow-xl rounded-2xl overflow-hidden hover:scale-110 hover:z-40 hover:shadow-2xl transition-all duration-500 ease-out cursor-pointer opacity-100 hover:opacity-100 ${img.styles}`}
         >
           <Image
             src={img.src}

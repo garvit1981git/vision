@@ -31,57 +31,57 @@ gsap.registerPlugin(Observer);
 gsap.registerPlugin(ScrollTrigger);
 const ImageDisplay = () => {
   const wallImages = [
-    {
-      src: wall1,
-    },
-    {
-      src: wall9,
-    },
-    {
-      src: wall2,
-    },
-    {
-      src: wall8,
-    },
-    {
-      src: wall5,
-    },
-    {
-      src: wall6,
-    },
-    {
-      src: wall3,
-    },
-    {
-      src: wall10,
-    },
-    {
-      src: wall4,
-    },
-    {
-      src: wall11,
-    },
-    {
-      src: wall7,
-    },
-    {
-      src: hero1,
-    },
-    {
-      src: wall1,
-    },
-    {
-      src: wall9,
-    },
-    {
-      src: wall2,
-    },
-    {
-      src: wall8,
-    },
-    {
-      src: wall5,
-    },
+    // {
+    //   src: wall1,
+    // },
+    // {
+    //   src: wall9,
+    // },
+    // {
+    //   src: wall2,
+    // },
+    // {
+    //   src: wall8,
+    // },
+    // {
+    //   src: wall5,
+    // },
+    // {
+    //   src: wall6,
+    // },
+    // {
+    //   src: wall3,
+    // },
+    // {
+    //   src: wall10,
+    // },
+    // {
+    //   src: wall4,
+    // },
+    // {
+    //   src: wall11,
+    // },
+    // {
+    //   src: wall7,
+    // },
+    // {
+    //   src: hero1,
+    // },
+    // {
+    //   src: wall1,
+    // },
+    // {
+    //   src: wall9,
+    // },
+    // {
+    //   src: wall2,
+    // },
+    // {
+    //   src: wall8,
+    // },
+    // {
+    //   src: wall5,
+    // },
     {
       src: wall6,
     },
@@ -110,6 +110,7 @@ const ImageDisplay = () => {
   // We don't move a track anymore, we just track a math value.
   const targetX = useRef(0);
   const currentX = useRef(0);
+  const isHovered = useRef(false);
 
   // useGSAP(
 
@@ -182,7 +183,7 @@ const ImageDisplay = () => {
   //   { scope: sectionRef },
   // );
 
-  useEffect(() => {
+  useGSAP(() => {
     const cards = gsap.utils.toArray(".wheel-card"); // or cardsRef.current
 
     // 1. Convert our constants to "let" so they can change
@@ -194,7 +195,7 @@ const ImageDisplay = () => {
     // 2. Create a function that calculates the values based on screen size
     const calculateResponsiveValues = () => {
       const width = window.innerWidth;
-if (width < 600) {
+      if (width < 600) {
         // MOBILE SETTINGS
         gap = 170; // Cards are closer together
         maxHump = 120; // The hill is much flatter so it fits on screen
@@ -235,6 +236,10 @@ if (width < 600) {
     // 1. THE PHYSICS LOOP (Replaces GSAP Ticker)
     const updateLoop = () => {
       // Calculate momentum distance
+      if (!isHovered.current) {
+        // Change this number to make it auto-play faster or slower
+        targetX.current -= 1.2;
+      }
       let distanceToMove = (targetX.current - currentX.current) * 0.08;
 
       // Speed limit (max pixels per frame)
@@ -242,8 +247,16 @@ if (width < 600) {
       distanceToMove = clamp(-maxSpeed, maxSpeed, distanceToMove);
 
       currentX.current += distanceToMove;
-
+      // const pageTurnAngle = distanceToMove * 1.4;
       // Update every card
+      let pageTurnAngle = distanceToMove * 1.5;
+      pageTurnAngle = gsap.utils.clamp(-65, 15, pageTurnAngle);
+      // Calculate how extreme the angle is (absolute value removes negatives)
+      const angleSeverity = Math.abs(pageTurnAngle);
+
+      // Calculate how far the shadow should drop based on swipe speed
+      const shadowOffset = gsap.utils.mapRange(0, 45, 10, 40, angleSeverity);
+      const shadowBlur = gsap.utils.mapRange(0, 45, 15, 50, angleSeverity);
       cardsRef.current.forEach((card, index) => {
         if (!card) return;
 
@@ -266,9 +279,17 @@ if (width < 600) {
 
         // Use the dynamic maxHump variable instead of 250
         const y = Math.pow(normalized, 2) * maxHump;
-
+        gsap.set(card, {
+          x: wrappedX,
+          y: y,
+          yPercent: -50,
+          rotation: rotation,
+          rotationY: pageTurnAngle,
+          transformPerspective: 1500,
+          boxShadow: `0px ${shadowOffset}px ${shadowBlur}px rgba(0,0,0,0.3)`,
+        });
         // Apply CSS Transforms directly
-        card.style.transform = `translate(${wrappedX}px, calc(-50% + ${y}px)) rotate(${rotation}deg)`;
+        // card.style.transform = ` calc(-50% + ${y}px))`;
       });
 
       animationFrameId = requestAnimationFrame(updateLoop);
@@ -335,15 +356,17 @@ if (width < 600) {
     <>
       <section
         ref={sectionRef}
-        className="relative w-full h-screen overflow-hidden  flex items-center cursor-grab active:cursor-grabbing"
+        className="relative w-full h-140   overflow-hidden  flex items-center cursor-grab active:cursor-grabbing"
       >
         {wallImages.map((img, index) => {
           return (
             <div
+              onMouseEnter={() => (isHovered.current = true)}
+              onMouseLeave={() => (isHovered.current = false)}
               key={index}
               ref={(el) => (cardsRef.current[index] = el)}
               // Absolute positioning anchored to the center of the spinning Hub
-              className="wheel-card absolute top-[50%] -translate-y-1/2 left-0 w-[clamp(160px,18vw,260px)] aspect-[3/4] origin-bottom z-10"
+              className="wheel-card absolute top-[43%] -translate-y-1/2 left-0 w-[clamp(160px,18vw,260px)] aspect-[3/4] origin-bottom z-10"
             >
               <Image
                 src={img.src}
@@ -354,6 +377,11 @@ if (width < 600) {
             </div>
           );
         })}
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-4 text-[#890620] font-['Instrument_Serif'] text-sm tracking-[0.2em] uppercase pointer-events-none animate-pulse">
+          <span>←</span>
+          <span>Drag to explore</span>
+          <span>→</span>
+        </div>
       </section>
     </>
   );

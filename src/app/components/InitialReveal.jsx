@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { usePathname } from "next/navigation";
-
+// THIS TECHNICE IS CALLED CLIP PATH ANIMATION 
 export default function InitialReveal({ children }) {
   const pathname = usePathname();
   const isHomePage = pathname === "/";

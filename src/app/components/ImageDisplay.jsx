@@ -31,57 +31,6 @@ gsap.registerPlugin(Observer);
 gsap.registerPlugin(ScrollTrigger);
 const ImageDisplay = () => {
   const wallImages = [
-    // {
-    //   src: wall1,
-    // },
-    // {
-    //   src: wall9,
-    // },
-    // {
-    //   src: wall2,
-    // },
-    // {
-    //   src: wall8,
-    // },
-    // {
-    //   src: wall5,
-    // },
-    // {
-    //   src: wall6,
-    // },
-    // {
-    //   src: wall3,
-    // },
-    // {
-    //   src: wall10,
-    // },
-    // {
-    //   src: wall4,
-    // },
-    // {
-    //   src: wall11,
-    // },
-    // {
-    //   src: wall7,
-    // },
-    // {
-    //   src: hero1,
-    // },
-    // {
-    //   src: wall1,
-    // },
-    // {
-    //   src: wall9,
-    // },
-    // {
-    //   src: wall2,
-    // },
-    // {
-    //   src: wall8,
-    // },
-    // {
-    //   src: wall5,
-    // },
     {
       src: wall6,
     },
@@ -356,7 +305,7 @@ const ImageDisplay = () => {
     <>
       <section
         ref={sectionRef}
-        className="relative w-full h-140   overflow-hidden  flex items-center cursor-grab active:cursor-grabbing"
+        className="relative w-full h-140 overflow-hidden flex items-center cursor-grab active:cursor-grabbing"
       >
         {wallImages.map((img, index) => {
           return (
@@ -372,7 +321,7 @@ const ImageDisplay = () => {
                 src={img.src}
                 alt={`Wall Image ${index + 1}`}
                 fill
-                className="object-cover rounded-xl shadow-2xl"
+                className=" shadow-2xl"
               />
             </div>
           );

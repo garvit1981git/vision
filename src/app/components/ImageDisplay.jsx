@@ -26,6 +26,8 @@ const wrap = (min, max, value) => {
   return ((((value - min) % rangeSize) + rangeSize) % rangeSize) + min;
 };
 // THIS IS CALLED FANNING ouT EFFECT
+// THIS IS CALLED SEEMELESS LOOP ILLUSION
+
 // Awwwards curved carousel,
 gsap.registerPlugin(Observer);
 gsap.registerPlugin(ScrollTrigger);
@@ -136,34 +138,34 @@ const ImageDisplay = () => {
     const cards = gsap.utils.toArray(".wheel-card"); // or cardsRef.current
 
     // 1. Convert our constants to "let" so they can change
-    let gap = 300;
+    let gap = 350;
     let totalWidth = 0;
     let maxHump = 250;
-    let maxRotation = 45;
+    let maxRotation = 35;
 
     // 2. Create a function that calculates the values based on screen size
     const calculateResponsiveValues = () => {
       const width = window.innerWidth;
       if (width < 600) {
         // MOBILE SETTINGS
-        gap = 170; // Cards are closer together
-        maxHump = 120; // The hill is much flatter so it fits on screen
-        maxRotation = 15; // Less tilt
+        gap = 300; // Cards are closer together
+        maxHump = 50; // The hill is much flatter so it fits on screen
+        maxRotation = 25; // Less tilt
       } else if (width < 768) {
         // MOBILE SETTINGS
-        gap = 200; // Cards are closer together
+        gap = 230; // Cards are closer together
         maxHump = 120; // The hill is much flatter so it fits on screen
         maxRotation = 25; // Less tilt
       } else if (width < 1024) {
         // TABLET SETTINGS
-        gap = 250;
+        gap = 280;
         maxHump = 180;
         maxRotation = 35;
       } else {
         // DESKTOP SETTINGS
-        gap = 300;
+        gap = 350;
         maxHump = 250;
-        maxRotation = 45;
+        maxRotation = 35;
       }
 
       // Always recalculate the total treadmill width when the gap changes!
@@ -187,12 +189,12 @@ const ImageDisplay = () => {
       // Calculate momentum distance
       if (!isHovered.current) {
         // Change this number to make it auto-play faster or slower
-        targetX.current -= 1.2;
+        targetX.current -= 2.8;
       }
-      let distanceToMove = (targetX.current - currentX.current) * 0.08;
+      let distanceToMove = (targetX.current - currentX.current) * 0.1;
 
       // Speed limit (max pixels per frame)
-      const maxSpeed = 60;
+      const maxSpeed = 80;
       distanceToMove = clamp(-maxSpeed, maxSpeed, distanceToMove);
 
       currentX.current += distanceToMove;
@@ -255,7 +257,7 @@ const ImageDisplay = () => {
 
         // Clamp user swipe input
         let safeDelta = clamp(-100, 100, e.deltaX);
-        targetX.current -= safeDelta * 1.5;
+        targetX.current -= safeDelta * 2;
       }
     };
 
@@ -305,7 +307,7 @@ const ImageDisplay = () => {
     <>
       <section
         ref={sectionRef}
-        className="relative w-full h-140 overflow-hidden flex items-center cursor-grab active:cursor-grabbing"
+        className="relative w-full h-160 overflow-hidden flex items-center cursor-grab active:cursor-grabbing"
       >
         {wallImages.map((img, index) => {
           return (
@@ -315,7 +317,7 @@ const ImageDisplay = () => {
               key={index}
               ref={(el) => (cardsRef.current[index] = el)}
               // Absolute positioning anchored to the center of the spinning Hub
-              className="wheel-card absolute top-[43%] -translate-y-1/2 left-0 w-[clamp(160px,18vw,260px)] aspect-[3/4] origin-bottom z-10"
+              className="wheel-card absolute top-[43%] -translate-y-1/2 left-0 w-[clamp(250px,25vw,320px)] aspect-[3/4] origin-bottom z-10"
             >
               <Image
                 src={img.src}
@@ -326,7 +328,7 @@ const ImageDisplay = () => {
             </div>
           );
         })}
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-4 text-[#890620] font-['Instrument_Serif'] text-sm tracking-[0.2em] uppercase pointer-events-none animate-pulse">
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-4 text-[#890620] font-['Instrument_Serif'] text-sm tracking-[0.2em] uppercase pointer-events-none animate-pulse whitespace-nowrap">
           <span>←</span>
           <span>Drag to explore</span>
           <span>→</span>

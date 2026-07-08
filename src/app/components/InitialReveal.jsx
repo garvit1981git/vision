@@ -46,7 +46,7 @@ const [isAnimating, setIsAnimating] = useState(isHomePage);
   return (
     <div
       ref={wrapperRef}
-      className={`w-full  page-wrapper bg-[#FFCDB2] p-1 sm:p-3 md:p-6 ${
+      className={`w-full  page-wrapper bg-[#FFCDB2] ${
         isAnimating ? "h-screen overflow-hidden" : "min-h-screen"
       }`}
       style={isAnimating ? { clipPath: "circle(0px at 50vw 50vh)" } : {}}

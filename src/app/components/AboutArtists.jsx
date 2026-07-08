@@ -7,6 +7,11 @@ import artist4 from "../Images/artist4.webp";
 import artist5 from "../Images/artist5.jpg";
 import Image from "next/image";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
+gsap.registerPlugin(ScrollTrigger);
+
 const AboutArtists = () => {
   let [openartist, setopenartist] = useState(null);
   let ArtistData = [
@@ -43,12 +48,46 @@ const AboutArtists = () => {
   let ShowDesc = (index) => {
     setopenartist((prev) => (prev == index ? null : index));
   };
+  useGSAP(() => {
+    // DO NOT use a timeline here. Keep them as separate standalone animations!
+
+    // 1. Entrance Animation
+    gsap.from(".card", {
+      y: 200, // (Note: you changed this from y: 200 to x: 200, which will slide them in from the side. Both look great!)
+      opacity: 0,
+      ease: "power4.out",
+      stagger: 0.2,
+      duration: 1,
+      scrollTrigger: {
+        trigger: ".holder",
+        start: "top 80%",
+        end: "bottom 60%",
+        scrub: 3,
+      },
+    });
+
+    // 2. Seamless Exit Fade (Triggered securely by the .holder itself)
+    gsap.to(".card", {
+      opacity: 0,
+      ease: "power4.out",
+      duration: 1,
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: ".holder",
+        // Starts fading EXACTLY as the bottom of .holder hits the bottom of the viewport
+        start: "bottom bottom",
+        // Fully fades out by the time the bottom of .holder reaches the center of the viewport
+        end: "bottom top",
+        scrub: 1, // I lowered this back to 1. Scrub: 5 will make the fade lag 5 seconds behind the user's scroll, feeling sluggish.
+      },
+    });
+  });
   return (
     <div className="mt-10  px-4 md:px-20">
       <h1 className="capitalize text-[#890620] lg:text-[4vw] md:text-[5vw] text-[8vw] font-['Instrument_Serif'] text-center m-4">
         Meet the creatives behind these artworks.
       </h1>
-      <div className="holder gap-10  flex flex-col">
+      <div className="holder  gap-10  flex flex-col">
         {ArtistData.map((artist, index) => {
           let open = index === openartist;
           let isEven = index % 2 == 0;

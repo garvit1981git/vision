@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     // Added 'relative' to the nav so the mobile dropdown can position itself below it
-    <nav className="relative flex items-center justify-between text-[#890620] font-['Mona_Sans_Variable'] ">
+    <nav className="relative p-1 sm:p-3 md:p-6  flex items-center justify-between text-[#890620] font-['Mona_Sans_Variable'] ">
       
       {/* 1. MOBILE MENU ICON (Left on mobile, hidden on desktop) */}
       {/* order-1 keeps it on the far left on mobile screens */}

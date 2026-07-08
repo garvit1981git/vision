@@ -173,7 +173,7 @@ const BuyTrain = () => {
           </button>
         </div>
 
-        <div className="flex gap-5 justify-center items-center md:hidden">
+        <div className="flex gap-6 mt-5 justify-center items-center md:hidden">
           <button
             onClick={HandleLeft}
             className=" border border-[#890620] text-[#890620] rounded-full  hover:bg-[#890620] hover:text-white transition-all duration-300 group z-10 flex-row-reverse justify-between items-center capitalize font-['Mona_Sans_Variable'] px-2 py-2  top-[50%] left-0   whitespace-nowrap"
@@ -185,7 +185,7 @@ const BuyTrain = () => {
               viewBox="0 0 24 24"
               strokeWidth={2}
               stroke="currentColor"
-              className="w-4 h-4 sm:w-6 sm:h-6 transform transition-transform group-hover:-translate-x-1"
+              className="w-6 h-6 sm:w-6 sm:h-6 transform transition-transform group-hover:-translate-x-1"
             >
               <path
                 strokeLinecap="round"
@@ -205,7 +205,7 @@ const BuyTrain = () => {
               viewBox="0 0 24 24"
               strokeWidth={2}
               stroke="currentColor"
-              className="w-4 h-4 sm:w-6 sm:h-6 transform transition-transform group-hover:translate-x-1"
+              className="w-6 h-6 sm:w-6 sm:h-6 transform transition-transform group-hover:translate-x-1"
             >
               <path
                 strokeLinecap="round"

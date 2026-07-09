@@ -16,6 +16,7 @@ export default function Home() {
       <Invite></Invite>
       <ImageDisplay></ImageDisplay>
       <Artwall></Artwall>
+      
       <AboutArtists></AboutArtists>
       <Footer></Footer>
     </>

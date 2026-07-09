@@ -14,6 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const AboutArtists = () => {
   let [openartist, setopenartist] = useState(null);
+  let containerRef = React.useRef(null);
   let ArtistData = [
     {
       artist: "Eliza Mowery",
@@ -50,7 +51,12 @@ const AboutArtists = () => {
   };
   useGSAP(() => {
     // DO NOT use a timeline here. Keep them as separate standalone animations!
-
+    ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "bottom bottom", // Activates when the bottom of this section hits the bottom of the viewport
+      pin: true,
+      pinSpacing: false, // CRITICAL: This allows the next component in the DOM (Footer) to scroll over it!
+    });
     // 1. Entrance Animation
     gsap.from(".card", {
       y: 200, // (Note: you changed this from y: 200 to x: 200, which will slide them in from the side. Both look great!)
@@ -63,6 +69,7 @@ const AboutArtists = () => {
         start: "top 80%",
         end: "bottom 60%",
         scrub: 3,
+        // Ensures the animation is tied to the scroll position and doesn't "jump" when scrolling fast
       },
     });
 
@@ -78,13 +85,14 @@ const AboutArtists = () => {
         start: "bottom bottom",
         // Fully fades out by the time the bottom of .holder reaches the center of the viewport
         end: "bottom top",
-        scrub: 1, // I lowered this back to 1. Scrub: 5 will make the fade lag 5 seconds behind the user's scroll, feeling sluggish.
+        scrub: 1,
+        // I lowered this back to 1. Scrub: 5 will make the fade lag 5 seconds behind the user's scroll, feeling sluggish.
       },
     });
   });
   return (
-    <div className="mt-10  px-4 md:px-20">
-      <h1 className="capitalize text-[#890620] lg:text-[4vw] md:text-[5vw] text-[8vw] font-['Instrument_Serif'] text-center m-4">
+    <div ref={containerRef} className="mt-10  px-4 md:px-20  ">
+      <h1 className="capitalize text-[#890620] lg:text-[4vw] md:text-[5vw] text-[8vw] font-['Instrument_Serif'] text-center m-4 relative z-2">
         Meet the creatives behind these artworks.
       </h1>
       <div className="holder  gap-10  flex flex-col">
@@ -94,7 +102,7 @@ const AboutArtists = () => {
           return (
             <React.Fragment key={artist.artist}>
               <div
-                className={`card flex justify-between gap-10 items-center pb-10 border-b border-white flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"}`}
+                className={`card flex justify-between gap-10 items-center pb-10 border-b border-white flex-col  ${isEven ? "md:flex-row" : "md:flex-row-reverse"}`}
               >
                 <Image
                   src={artist.img}

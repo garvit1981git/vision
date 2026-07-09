@@ -53,7 +53,7 @@ const Footer = () => {
   return (
     <footer
       ref={footerRef}
-      className="w-full px-4 md:px-20 py-16 flex flex-col justify-between border-t border-[#890620]/30 text-[#890620] bg-black min-h-[50vh]"
+      className="w-full px-4 md:px-20 py-16 flex flex-col justify-between border-t border-[#890620]/30 text-[#890620] bg-black min-h-[50vh] relative z-10 "
     >
       {/* Top Section: Scaled-down Typography & Intro */}
       <div className="flex flex-col md:flex-row justify-between items-start gap-8 border-b border-[#890620]/20 pb-12 overflow-hidden">
